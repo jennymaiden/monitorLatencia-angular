@@ -1,0 +1,31 @@
+.menu{
+  background: black;
+}
+
+.menu a{
+  border: #fff ;
+  width: 209px;
+  padding: 12px 0;
+  display: inline-block;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 30px;
+  color: white;
+  font-family: 'Raleway',sans-serif;
+  padding: 10px;
+}
+.dropdown-menu{
+  background: black;
+}
+.nav-item .active{
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: #212F3D;
+  text-align: center;
+  color: blanchedalmond;
+}
+.dropdown-menu{
+  left:auto;
+  right:0;
+  margin-right:-10px;
+}

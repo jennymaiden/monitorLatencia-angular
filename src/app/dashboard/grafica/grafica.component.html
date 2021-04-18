@@ -1,0 +1,43 @@
+<div class="row music-box">
+  <div class="col-md-12">
+    <h1 align="center">Gráfica</h1>
+  </div>
+</div>
+<div class="card border-warning">
+  <div class="card-header bg-warning font-weight-bold">
+    Monitor de latencia
+  </div>
+  <div class="card-body">
+      <div class="flex">
+        <div class="flex-item">
+          <div style="display: block;">
+            <canvas baseChart
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType"></canvas>
+          </div>
+        </div>
+<!--        <div class="flex-item">-->
+<!--          <table class="table table-responsive table-condensed">-->
+<!--            <tr>-->
+<!--              <th *ngFor="let label of lineChartLabels">{{label}}</th>-->
+<!--            </tr>-->
+<!--            <tr *ngFor="let d of lineChartData; let i=index" [class]="'line-'+i">-->
+<!--              <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>-->
+<!--            </tr>-->
+<!--          </table>-->
+<!--          <button mat-button mat-raised-button color="primary" (click)="randomize()">Randomize</button>-->
+<!--          <button mat-button mat-raised-button color="primary" (click)="pushOne()">Push</button>-->
+<!--          <button mat-button mat-raised-button color="primary" (click)="changeColor()">Recolor</button>-->
+<!--          <button mat-button mat-raised-button color="primary" (click)="hideOne()">Toggle Series B</button>-->
+<!--          <button mat-button mat-raised-button color="primary" (click)="changeLabel()">Change Label</button>-->
+<!--        </div>-->
+      </div>
+
+  </div>
+
+</div>
+

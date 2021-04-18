@@ -1,0 +1,52 @@
+<nav class="navbar  navbar-expand-lg menu">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <div class="row">
+        <div class="col-sm-3">
+
+          <li class="nav-item " >
+            <a class="nav-link  active" href="#inicio" (click)="suscribirNotificaciones()">Inicio</a>
+          </li>
+        </div>
+        <div class="col-sm-2">
+<!--          <span class="badge badge-success">{{respuesta | json}}</span>-->
+
+        </div>
+        <div class="col-sm-6">
+          <ul class="navbar-nav me-auto " >
+
+            <li class="nav-item" >
+              <a class="nav-link " href="#parametrizacion">Parametrización</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="#grafica">Gráfica</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="#diagnostico">Diagnostico</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Alarmas
+              </a>
+              <div class="dropdown-menu " aria-labelledby="navbarDropdownMenuLink">
+                <app-alerta></app-alerta>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</nav>
+
+<!--Tabla 12-->
+<!--Servicio POST de suscripción de notificación-->
+<!--Tabla 14-->
+<!--Servicio GET de alertas-->
+<!--Tabla 16-->
+<!--Servicio GET de notificación-->
+
+
+

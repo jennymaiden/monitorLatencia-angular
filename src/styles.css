@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.dashboard{
+  background-image: url('./assets/img/fondo_2.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 90vh;
+}
+.music-box {
+  padding: 50px 0px;
+  background: #fff;
+}
+body{
+
+}
+
