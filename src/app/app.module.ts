@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -11,10 +12,11 @@ import { GraficaComponent } from './dashboard/grafica/grafica.component';
 import { DiagnosticoComponent } from './dashboard/diagnostico/diagnostico.component';
 import { AlertaComponent } from './dashboard/alerta/alerta.component';
 
-//Graficos
+
 import {ChartsModule} from 'ng2-charts';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +27,11 @@ import { environment } from '../environments/environment';
     ParametrizacionComponent,
     GraficaComponent,
     DiagnosticoComponent,
-    AlertaComponent
+    AlertaComponent,
+    ModalComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ChartsModule,

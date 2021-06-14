@@ -1,34 +1,40 @@
-<div class="row music-box">
-  <div class="col-md-12">
-    <h1 align="center">Parametrización</h1>
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row music-box">
+    <div class="col-md-12">
+      <h1 align="center">Parametrización</h1>
+    </div>
   </div>
-</div>
-<div class="card border-info ">
+  <div class="card border-info ">
     <div class="card-header bg-info font-weight-bold">
       Formulario
     </div>
+    <!--  is-invalid-->
     <div class="card-body">
       <form>
         <div class="mb-3">
           <label for="url" class="form-label">URL</label>
-          <input type="text" class="form-control" id="url" aria-describedby="URL">
-
+          <input type="text" class="form-control " id="url" aria-describedby="URL" required>
+          <div class="invalid-feedback">
+            Por favor ingresar una URL valida
+          </div>
         </div>
         <div class="row">
           <div class="col-6">
             <label for="numCliente" class="form-label">Número de usuarios</label>
-            <input type="number" class="form-control" id="numCliente" aria-describedby="Número de usuarios">
-
+            <input type="number" class="form-control " id="numCliente" aria-describedby="Número de usuarios">
+            <div class="invalid-feedback">
+              Por favor ingresar un número de usuario
+            </div>
           </div>
           <div class="col-6">
             <label for="tamanioPaquete" class="form-label">Tamaño de paquetes</label>
             <div class="input-group has-validation">
-              <input type="text" class="form-control" id="tamanioPaquete" aria-describedby="inputGroupPrepend0 validaciontamanio" required>
+              <input type="text" class="form-control " id="tamanioPaquete" aria-describedby="inputGroupPrepend0 validaciontamanio" required>
               <span class="input-group-text" id="tamanioPaquetee">Bytes</span>
-              <div id="validaciontamanio" class="invalid-feedback">
-                Campo es obligatorio
+              <div class="invalid-feedback">
+                Por favor ingresar el tamaño de los paquetes
               </div>
-              <!-- is-invalid CLASE PARA CUANDO ESTA VACIO Y ES OBLIGATORIO-->
             </div>
           </div>
         </div>
@@ -36,27 +42,35 @@
           <div class="col-6">
             <label for="tiempoSeg" class="form-label">Tiempo de la muestra</label>
             <div class="input-group has-validation">
-              <input type="text" class="form-control" id="tiempoSeg" aria-describedby="inputGroupPrepend0 validacionTiempoSeg" required>
+              <input type="text" class="form-control " id="tiempoSeg" aria-describedby="inputGroupPrepend0 validacionTiempoSeg" required>
               <span class="input-group-text" >Segundos</span>
-              <div id="validacionTiempoSeg" class="invalid-feedback">
-                Campo es obligatorio
+              <div class="invalid-feedback">
+                Por favor ingresar el tiempo de la muestra
               </div>
-              <!-- is-invalid CLASE PARA CUANDO ESTA VACIO Y ES OBLIGATORIO-->
             </div>
           </div>
           <div class="col-6">
             <label for="horaInicio" class="form-label">Hora de inicio</label>
-            <input class="form-control" type="time" value="" id="horaInicio">
+            <input class="form-control " type="time" value="" id="horaInicio">
+            <div class="invalid-feedback">
+              Por favor ingresar la hora de inicio
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-6">
             <label for="fechaInicio" class="form-label">Fecha de inicio</label>
-            <input class="form-control" type="date" value="" id="fechaInicio">
+            <input class="form-control " type="date" value="" id="fechaInicio">
+            <div class="invalid-feedback">
+              Por favor ingresar la fecha de inicio
+            </div>
           </div>
           <div class="col-6">
             <label for="fechaFinalizacion" class="form-label">Fecha de finalización</label>
-            <input class="form-control" type="date" value="" id="fechaFinalizacion">
+            <input class="form-control " type="date" value="" id="fechaFinalizacion">
+            <div class="invalid-feedback">
+              Por favor ingresar la fecha de finalización
+            </div>
           </div>
         </div>
 
@@ -65,7 +79,7 @@
         </div>
         <div class="row justify-content-between">
           <div class="col-4">
-            <button type="button" class="btn btn-warning">Monitoreo Programado</button>
+            <button type="submit" class="btn btn-warning">Monitoreo Programado</button>
           </div>
           <div class="col-4">
             <button type="button" class="btn btn-success">Monitoreo Tiempo real</button>
@@ -75,5 +89,8 @@
 
 
       </form>
+
     </div>
+  </div>
 </div>
+<app-footer></app-footer>
