@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {ListarAlertaService} from '../../services/listar-alerta.service';
+import {Alerta} from '../../models/alerta';
 
 @Component({
   selector: 'app-alerta',
@@ -6,10 +9,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./alerta.component.css']
 })
 export class AlertaComponent implements OnInit {
+  public listAlerta: Alerta[];
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private router: Router, private alertaService: ListarAlertaService) {
+    this.listAlerta = [];
   }
 
+  ngOnInit(): void {
+    this.listarAlertas();
+  }
+
+  public mostrarDiagnostico(idLatencia: string, idAlerta: string): void{
+
+    // Actualizar alerta a vista
+    this.alertaService.actualizarAlerta(idAlerta);
+    // Ir a diagnostico
+    this.router.navigate(['/diagnostico/' + idLatencia]);
+  }
+  public listarAlertas(): void{
+
+    this.alertaService.getAlerta().subscribe(data => {
+      if (data.msg === 'OK'){
+        data.listAlerta.forEach((objAlerta, index ) => {
+          this.listAlerta.push(objAlerta);
+        });
+      }
+    });
+  }
 }

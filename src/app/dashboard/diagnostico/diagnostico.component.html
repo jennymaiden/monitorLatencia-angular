@@ -1,15 +1,15 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" style="margin-bottom: 500px">
   <div class="row music-box">
     <div class="col-md-12">
       <h1 align="center">Diagnóstico</h1>
     </div>
   </div>
-  <div class="card border-success end">
+  <div class="card border-success end" >
     <div class="card-header bg-success font-weight-bold">
       Información
     </div>
-    <div class="card-body">
+    <div class="card-body" >
       <div id="accordion">
         <div class="card">
           <div class="card-header" id="headingOne">
@@ -27,38 +27,38 @@
                 <div class="col-4">
                   <p class="font-weight-bold">URL:</p>
                 </div>
-                <div class="col-8">http://localhost:4200/#parametrizacion</div>
+                <div class="col-8">{{response?.parametro?.URL}}</div>
               </div>
               <div class="row">
                 <div class="col-3">
                   <p class="font-weight-bold">Números de usuarios:</p>
                 </div>
-                <div class="col-3">4</div>
+                <div class="col-3">{{response?.parametro?.numClientes}}</div>
                 <div class="col-3">
                   <p class="font-weight-bold">Tamaño de paquetes:</p>
                 </div>
-                <div class="col-3">64 Bytes</div>
+                <div class="col-3">{{response?.parametro?.tamanioPaquete}} Bytes</div>
               </div>
 
               <div class="row">
                 <div class="col-3">
                   <p class="font-weight-bold">Hora de inicio:</p>
                 </div>
-                <div class="col-3">1 hora</div>
+                <div class="col-3">{{response?.parametro?.horaInicio}}</div>
                 <div class="col-3">
                   <p class="font-weight-bold">Duración de la muestra:</p>
                 </div>
-                <div class="col-3">1 hora</div>
+                <div class="col-3">{{response?.parametro?.tiempoSeg}} Segundos</div>
               </div>
               <div class="row">
                 <div class="col-3">
                   <p class="font-weight-bold">Fecha Inicio</p>
                 </div>
-                <div class="col-3">10/12/2020</div>
+                <div class="col-3">{{response?.parametro?.fechaInicio}}</div>
                 <div class="col-3">
                   <p class="font-weight-bold">Fecha Fin:</p>
                 </div>
-                <div class="col-3">10/12/2020</div>
+                <div class="col-3">{{response?.parametro?.fechaFin}}</div>
               </div>
 
             </div>
@@ -74,74 +74,141 @@
           </div>
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
+              <h3 class="text-center">La muestra es
+                <span *ngIf='response?.diagnostico?.falla' class="badge badge-danger">Fallida</span>
+                <span *ngIf='!response?.diagnostico?.falla' class="badge badge-success">Aceptable</span>
+              </h3>
               <div class="row">
-                <div class="col-12">
-                  <p>Las recomendaciones para esta muestra son las siguientes: </p>
-
+                <div class="col-3">
+                  <p class="font-weight-bold">Tipo de muestra</p>
+                </div>
+                <div class="col-8">
+                  <p class="text" *ngIf='response?.diagnostico?.falla'>Inaceptable</p>
+                  <p class="text" *ngIf='!response?.diagnostico?.falla'>Aceptable</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-3">
-                  <p class="font-weight-bold">Estado</p>
+                  <p class="font-weight-bold">Se debe a:</p>
                 </div>
                 <div class="col-8">
-                  <p class="text">La toma de la muestra salio exitosa
-                    <br>No tiene ninguna afectacion grave en su red</p>
+                  <p class="text">{{response?.recomendacion?.causa}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="font-weight-bold">Mejora:</p>
+                </div>
+                <div class="col-8">
+                  <p class="text">{{response?.recomendacion?.solucion}}</p>
                 </div>
               </div>
               <hr>
-              <h3 class="text-center">La muestra es <span class="badge badge-success">correcta</span></h3>
               <div class="row">
-                <div class="col-3"><p class="font-weight-bold">Estadística</p></div>
+                <div class="col-3"><p class="font-weight-bold">Latencia</p></div>
                 <div class="col-8">
-                  <p class="text">7 packets transmitted, 7 packets received, 0.0% packet loss <br>
-                    ida y vuelta en min/promedio/max/desviación = 31.629/44.949/75.017/13.020 ms</p>
+                  <p class="text">{{response?.diagnostico?.estadistica}} </p>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-3">
-                  <p class="font-weight-bold">Consideraciones</p>
-                </div>
-                <div class="col-8">
-                  <p class="text">Mantener la conexion a la red de forma correcta</p>
-                </div>
+              <hr>
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Nota:</strong> La siguiente es una tabla base de los rangos en milisegundos(ms)
+                del tiempo promedio que deberia tener el envio de los paquetes, para tener una calidad de red en los servicios o protocolos que brinda.
+
               </div>
+
+              <table class="table table-hover">
+                <thead>
+                <tr class="table-success">
+                  <th scope="col">Servicio</th>
+                  <th scope="col">Rango</th>
+                  <th scope="col">Calidad de servicio</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">Protocolo HTTP (Navegación)</th>
+                  <td>De 60ms a 111ms</td>
+                  <td class="text-center"><span class="badge badge-success">Aceptable</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Protocolo SMTP (Correo)</th>
+                  <td>De 60ms a 80ms</td>
+                  <td class="text-center"><span class="badge badge-success">Aceptable</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Protocolo RSTP (Video - Llamadas)</th>
+                  <td>De 1ms a 35ms</td>
+                  <td class="text-center"><span class="badge badge-success">Aceptable</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Redes sociales</th>
+                  <td>De 40ms a 80ms</td>
+                  <td class="text-center"><span class="badge badge-success">Aceptable</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Peliculas</th>
+                  <td>De 10ms a 50ms</td>
+                  <td class="text-center"><span class="badge badge-success">Aceptable</span></td>
+                </tr>
+                <tr>
+                  <th scope="row">Juegos</th>
+                  <td>De 1ms a 20ms</td>
+                  <td class="text-center"><span class="badge badge-success">Aceptable</span></td>
+                </tr>
+                </tbody>
+              </table>
+
             </div>
 
           </div>
         </div>
 
-        <table class="table table-hover">
+        <hr>
+        <hr>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Su QoE: </strong> Su red con {{response?.parametro?.numClientes }} usuarios soporta la siguiente calidad en los servicios
+
+        </div>
+        <table class="table table-hover" style="margin-bottom: 100px">
           <thead class="thead-light">
           <tr>
-            <th scope="col">Paquete</th>
-            <th scope="col">TTL</th>
-            <th scope="col">Tiempo respuesta</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Error</th>
+            <th scope="col"></th>
+            <th scope="col">Juegos</th>
+            <th scope="col">Protocolo RTSP</th>
+            <th scope="col">Peliculas</th>
+            <th scope="col">Redes sociales</th>
+            <th scope="col">Protocolo SMTP</th>
+            <th scope="col">Protocolo HTTP</th>
           </tr>
           </thead>
           <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td>115</td>
-            <td>116.2</td>
-            <td>2</td>
-            <td><span class="badge badge-success">check</span></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>115</td>
-            <td>116.2</td>
-            <td>2</td>
-            <td><span class="badge badge-success">check</span></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>115</td>
-            <td>116.2</td>
-            <td>2</td>
-            <td><span class="badge badge-danger">Error</span></td>
+            <th scope="row">{{response?.parametro?.numClientes}} Usuarios</th>
+            <td class="text-center">
+              <span *ngIf='permiteJuegos()' class="badge badge-success">Aceptable</span>
+              <span *ngIf='!permiteJuegos()' class="badge badge-danger">Inaceptable</span>
+            </td>
+            <td class="text-center">
+              <span *ngIf='permiteRTSP()' class="badge badge-success">Aceptable</span>
+              <span *ngIf='!permiteRTSP()' class="badge badge-danger">Inaceptable</span>
+            </td>
+            <td class="text-center">
+              <span *ngIf='permitePeliculas()' class="badge badge-success">Aceptable</span>
+              <span *ngIf='!permitePeliculas()' class="badge badge-danger">Inaceptable</span>
+            </td>
+            <td class="text-center">
+              <span *ngIf='permiteRedesSociales()' class="badge badge-success">Aceptable</span>
+              <span *ngIf='!permiteRedesSociales()' class="badge badge-danger">Inaceptable</span>
+            </td>
+            <td class="text-center">
+              <span *ngIf='permiteSmtp()' class="badge badge-success">Aceptable</span>
+              <span *ngIf='!permiteSmtp()' class="badge badge-danger">Inaceptable</span>
+            </td>
+            <td class="text-center">
+              <span *ngIf='permiteHttp()' class="badge badge-success">Aceptable</span>
+              <span *ngIf='!permiteHttp()' class="badge badge-danger">Inaceptable</span>
+            </td>
           </tr>
           </tbody>
         </table>

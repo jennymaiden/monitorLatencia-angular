@@ -10,8 +10,9 @@ const routes: Routes = [
   { path : 'inicio', component: DashboardComponent},
   { path : 'parametrizacion', component: ParametrizacionComponent},
   { path : 'grafica', component: GraficaComponent},
+  { path : 'grafica/:idLatencia', component: GraficaComponent},
   { path : 'diagnostico', component: DiagnosticoComponent},
-  { path : 'diagnostico/**', component: DiagnosticoComponent, pathMatch: 'full'},
+  { path : 'diagnostico/:idLatencia', component: DiagnosticoComponent, pathMatch: 'full'},
   { path : '**', redirectTo: 'inicio', pathMatch: 'full' }
 ];
 

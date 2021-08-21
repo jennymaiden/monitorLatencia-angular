@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
+import {environment} from '../../environments/environment';
+import {WebPushNotificationsService} from '../services/web-push-notifications.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,22 +10,31 @@ import { SwPush } from '@angular/service-worker';
 })
 export class NavbarComponent  {
 
-  readonly PUBLIC_VAPID_KEY = 'BIYRI4eM_bXt7yb5nzE6ndMyBSmnu0lWKl61Ctdhli12Pp0bpjVFA4po6KOtPIbrhwh8M49SBOc373Nvxs0Ch6o';
+  readonly PUBLIC_VAPID_KEY = environment.publicKeyWeb;
   public respuesta: any;
-  constructor(private swPush: SwPush) {
-
+  constructor(private suscripcionWeb: WebPushNotificationsService, private swPush: SwPush) {
+    this.swPush.notificationClicks.subscribe((result) => {
+      console.log('clicked', result.action);
+    });
+    this.swPush.notificationClicks.subscribe(
+        ({action, notification}) => {
+          // TODO: Do something in response to notification click.
+        });
   }
   // tslint:disable-next-line:typedef
   suscribirNotificaciones() {
+    // this.suscripcionWeb.initialiseUI();
     this.swPush.requestSubscription({
       serverPublicKey: this.PUBLIC_VAPID_KEY
     }).then((respects: any) => {
       this.respuesta = respects;
-      alert(this.respuesta);
+      console.log(`suscripcion`, respects);
+      this.suscripcionWeb.sendSubcriptionObject(respects);
 
     }).catch((err: any) => {
       this.respuesta = err;
       console.log('Suscripción: ' + this.respuesta);
     });
   }
+
 }

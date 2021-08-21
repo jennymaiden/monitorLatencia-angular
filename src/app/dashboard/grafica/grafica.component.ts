@@ -1,8 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import {ChartDataSets, ChartOptions, ChartType, NestedTickOptions} from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { MostrarGraficaService } from '../../services/mostrar-grafica.service';
+import {Muestra} from '../../models/muestra';
+import {Grafica} from '../../models/grafica';
+import {Arreglo} from '../../models/arreglo';
+import {ActivatedRoute, Router} from '@angular/router';
 // import * as ChartAnnotation from "chartjs-plugin-annotation";
-//TODO Pagina de charts https://valor-software.com/ng2-charts/#/GeneralInfo
+// TODO Pagina de charts https://valor-software.com/ng2-charts/#/GeneralInfo
 @Component({
   selector: 'app-grafica',
   templateUrl: './grafica.component.html',
@@ -10,32 +15,34 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 })
 export class GraficaComponent implements OnInit{
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [43.522, 58.719, 51.236, 42.888, 45.579, 36.607, 50.643, 36.190, 31.884, 43.016, 63.076, 41.759, 31.884, 43.016, 63.076], label: 'Usuario 1' },
-    { data: [63.522, 48.719, 41.236, 52.888, 65.579, 56.607, 40.643, 36.190, 41.884, 33.016, 53.076, 31.759, 41.884, 53.016, 43.076], label: 'Usuario 2' },
-    { data: [52.522, 35.719, 68.236, 46.888, 52.579, 36.607, 49.643, 56.190, 48.884, 52.016, 60.076, 47.759, 56.884, 69.016, 52.076], label: 'Usuario 3' }
-  ];
+  public lineChartData: ChartDataSets[] = [{ data: [0], label: 'Base' }];
 
-  public lineChartLabels: Label[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
+  public lineChartLabels: Label[] = [];
 
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Numero de paquete'
+        }
+      }],
       yAxes: [
         {
-          id: 'y-axis-0',
-          position: 'left',
-        },
-        {
-          id: 'y-axis-1',
-          position: 'right',
-          gridLines: {
-            color: 'rgba(128,0,0,0.3)',
+          scaleLabel: {
+            display: true,
+            labelString: 'Tiempo en Milisegundos (ms)'
           },
           ticks: {
-            fontColor: 'red',
+            minor: {
+              min: 0,
+              max: 150
+            },
+            major: {
+              enabled: true
+            }
           }
         }
       ]
@@ -44,15 +51,14 @@ export class GraficaComponent implements OnInit{
       annotations: [
         {
           type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: 'March',
-          borderColor: 'orange',
-          borderWidth: 2,
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: '40',
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 4,
           label: {
-            enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
+            enabled: false,
+            content: 'Optimo'
           }
         },
       ],
@@ -76,8 +82,8 @@ export class GraficaComponent implements OnInit{
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     },
-    { // blue
-      backgroundColor: 'rgba(155,0,0,0.3)',
+    { // red
+      backgroundColor: 'rgba(255,0,0,0.3)',
       borderColor: 'red',
       pointBackgroundColor: 'rgba(148,159,177,1)',
       pointBorderColor: '#fff',
@@ -91,54 +97,83 @@ export class GraficaComponent implements OnInit{
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective | undefined;
 
-  constructor() { }
+  public listCliente: any[];
+  public idLatencia: any;
+
+  constructor(private graficaService: MostrarGraficaService, private router: ActivatedRoute, private router2: Router) {
+    this.listCliente = [];
+  }
 
   ngOnInit(): void {
+    this.getMostrarGrafica();
+    this.idLatencia = this.router.snapshot.paramMap.get('idLatencia');
   }
 
-  public randomize(): void {
-    // for (let i = 0; i < this.lineChartData.length; i++) {
-    //
-    //   for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-    //     this.lineChartData[i].data[j] = this.generateNumber(i);
-    //   }
-    // }
-    // this.chart.update();
-  }
+  // public generateRandomColor(): string
+  // {
+  //   // tslint:disable-next-line:prefer-const
+  //   let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  //   return randomColor;
+  // }
 
-  private generateNumber(i: number): number {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
-  }
+  // Servicio para traer la informacion de la grafica
+  public getMostrarGrafica(): void {
 
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
+    this.graficaService.getGrafica(this.idLatencia).subscribe(data => {
+      // data.getter('latencia');
+      // console.log(`todo1 ${data}`);
+      // console.log(`todo ${data.msg}`);
+      // console.log(`latencia ${data.latencia[0]._id}`);
+      // console.log(`arreglo ${data.arreglo}`);
+      if (data.msg === 'OK'){
+        data.arreglo.forEach((currentValue, index) => {
+          // @ts-ignore
+          this.listCliente.push(currentValue);
+        });
 
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
+        // tslint:disable-next-line:prefer-const
+        let listData: number[]  = [];
+        let labelData: string;
+        this.listCliente.forEach((currentValue, index) => {
 
-  public hideOne(): void {
-    // const isHidden = this.chart.isDatasetHidden(1);
-    // this.chart.hideDataset(1, !isHidden);
-  }
+          // console.log(`cliente label: Usuario ${currentValue.numCliente}`);
+          labelData = `Usuario ${currentValue.numCliente}`;
+          console.log('Usuario : ' + currentValue.numCliente);
+          currentValue.muestra.forEach((muestraValue: any, index2: number) => {
 
-  public pushOne(): void {
-    this.lineChartData.forEach((x, i) => {
-      const num = this.generateNumber(i);
-      const data: number[] = x.data as number[];
-      data.push(num);
+            listData.push(muestraValue.tiempoRespuesta);
+            // console.log(`tiempo de muesta: data ${muestraValue.tiempoRespuesta}`);
+          });
+          console.log('Tiempos : ' + listData);
+          // tslint:disable-next-line:prefer-const
+          let chartData: ChartDataSets;
+          chartData = {data: listData, label: labelData, borderColor: '#' + Math.floor(Math.random() * 16777215).toString(16)};
+          // console.log(`tamanio de muestra ${listData}`);
+          // @ts-ignore
+          this.lineChartData.push(chartData );
+        });
+        // console.log(`tamanio de listCliente ${this.listCliente[0].muestra.length}`);
+        this.listCliente[0].muestra.forEach((m: Muestra, i: number) => {
+          this.lineChartLabels.push(`${i}`);
+        });
+        // data.arreglo.forEach(dataCliente => {
+        //   console.log(`dataKey ${dataCliente}`);
+        // });
+        // tslint:disable-next-line:forin
+        // for (const dataKey in data.arreglo) {
+        //   console.log(`dataKey ${dataKey}`);
+        //   // @ts-ignore
+        //   this.listCliente.push(dataKey);
+        // }
+      }
     });
-    this.lineChartLabels.push(`Label ${this.lineChartLabels.length}`);
   }
+  irDiagnostico(): void {
+    if (this.idLatencia !== void 0 && this.idLatencia !== null){
+      this.router2.navigate(['/diagnostico/' + this.idLatencia]);
+    }else{
+      this.router2.navigate(['/diagnostico']);
+    }
 
-  public changeColor(): void {
-    this.lineChartColors[2].borderColor = 'green';
-    this.lineChartColors[2].backgroundColor = `rgba(0, 255, 0, 0.3)`;
-  }
-
-  public changeLabel(): void {
-    this.lineChartLabels[2] = ['1st Line', '2nd Line'];
   }
 }

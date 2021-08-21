@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SwPush } from '@angular/service-worker';
 
 import { environment } from './../../environments/environment';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebPushNotificationsService {
 
-  private _swRegistration;
-  private _isSubscribed: boolean;
+  private _swRegistration: any;
+  private _isSubscribed: boolean = false;
 
   private applicationServerPublicKey: string;
 
-  constructor(private httpClient: HttpClient) {
-    this.applicationServerPublicKey = 'BFnkgJn7fflANKc9J0bOIeYHgO8lUWIuPBuhWWNFzDXsr_rUSP36SamYzhwuckxel9jYhA0-LypN4gz3e7Gq-0M';
+  constructor(private httpClient: HttpClient, private swPush: SwPush) {
+    this.applicationServerPublicKey = environment.publicKeyWeb;
   }
 
   /**
@@ -53,9 +55,9 @@ export class WebPushNotificationsService {
         this._swRegistration = swReg;
         this.initialiseUI();
       })
-      .catch(function(error) {
+      .catch((error => {
         console.error('Error Service Worker', error);
-      });
+      }));
   }
 
   /**
@@ -64,20 +66,32 @@ export class WebPushNotificationsService {
    * Compruebe si el usuario permite las notificaciones web o le pide al usuario que lo permita
    * @returns void
    */
-  private initialiseUI(): void {
+  public initialiseUI(): void {
     // Set the initial subscription value
-    this._swRegistration.pushManager.getSubscription()
-      .then( subscription => {
-        this._isSubscribed = !(subscription === null);
-
-        if (this._isSubscribed) {
+    this.swPush.requestSubscription({
+      serverPublicKey: this.applicationServerPublicKey
+    })
+        .then( (subscription: any) => {
+          console.log('Usuario suscritó:initialiseUI: ', subscription);
           this.sendSubcriptionObject(subscription);
-        } else {
-          console.log('Usuario NO esta registrado');
-          this.subscribeUser();
-        }
-      });
+          this._isSubscribed = true;
+        });
   }
+
+  // private initialiseUI1(): void {
+  //   // Set the initial subscription value
+  //   this._swRegistration.pushManager.getSubscription()
+  //       .then( (subscription: any) => {
+  //         this._isSubscribed = !(subscription === null);
+  //
+  //         if (this._isSubscribed) {
+  //           this.sendSubcriptionObject(subscription);
+  //         } else {
+  //           console.log('Usuario NO esta registrado');
+  //           this.subscribeUser();
+  //         }
+  //       });
+  // }
 
   /**
    * sendSubcriptionObject
@@ -86,8 +100,9 @@ export class WebPushNotificationsService {
    * @param {} subscription
    * @returns void
    */
-  private sendSubcriptionObject(subscription): void {
-    const apiUrl = `${environment.apiRoot}/subscribe`;
+  public sendSubcriptionObject(subscription: any): void {
+    const apiUrl = `${environment.urlBackend}/api/monitoreo/suscripcion`;
+    console.log('url: ', apiUrl);
     this.httpClient.post(apiUrl, subscription).subscribe();
   }
 
@@ -99,19 +114,18 @@ export class WebPushNotificationsService {
    */
   private subscribeUser(): void {
     const applicationServerKey = this.urlB64ToUint8Array(this.applicationServerPublicKey);
-    this._swRegistration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: applicationServerKey
+    this.swPush.requestSubscription({
+      serverPublicKey: this.applicationServerPublicKey
     })
-      .then( (subscription) => {
-        console.log('Usuario suscritó: ', subscription);
+      .then( (subscription: any) => {
+        console.log('Usuario suscritó: subscribeUser:', subscription);
         this.sendSubcriptionObject(subscription);
         this._isSubscribed = true;
       })
-      .catch(function(err) {
-          console.log('Fallo al realizar la subcripción: ', err);
-        }
-      );
+        // tslint:disable-next-line:typedef
+      .catch(((error: any) => {
+        console.log('Fallo al realizar la subcripción: ', error);
+      }));
   }
 
   /**
@@ -121,7 +135,7 @@ export class WebPushNotificationsService {
    * @param {} base64String
    * @returns Uint8Array
    */
-  private urlB64ToUint8Array(base64String): Uint8Array {
+  private urlB64ToUint8Array(base64String: string | any[]): Uint8Array {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
       .replace(/\-/g, '+')

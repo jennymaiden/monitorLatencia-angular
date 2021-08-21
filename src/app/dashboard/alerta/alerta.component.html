@@ -1,3 +1,12 @@
-<a class="dropdown-item" routerLink="/diagnostico">Muestra de latencia <span class="badge badge-success">exitosa</span> del 24/02/2021 <span class="badge badge-info">Ver</span></a>
-<a class="dropdown-item" href="#">Muestra de latencia <span class="badge badge-warning">fallida</span> del 21/02/2021 <span class="badge badge-secondary">Vista</span></a>
-<a class="dropdown-item" href="#">Muestra de latencia <span class="badge badge-success">exitosa</span> del 24/02/2021 <span class="badge badge-info">Ver</span></a>
+<div *ngFor="let alerta of listAlerta">
+    <a class="dropdown-item"  (click)="mostrarDiagnostico(alerta.idLatencia, alerta._id)">Muestra de latencia
+        <span *ngIf='alerta?.estado' class="badge badge-danger">Fallida</span>
+        <span *ngIf='!alerta?.estado' class="badge badge-success">exitosa</span>
+        del {{alerta.fecha}}
+        <span *ngIf='!alerta?.leido' class="badge badge-info">Ver</span>
+        <span *ngIf='alerta?.leido'class="badge badge-secondary">Vista</span>
+    </a>
+</div>
+<!--<a class="dropdown-item"  (click)="mostrarDiagnostico('608f67db6ba6ad34e828a4d8')">Muestra de latencia <span class="badge badge-success">exitosa</span> del 24/02/2021 <span class="badge badge-info">Ver</span></a>-->
+<!--<a class="dropdown-item" href="#">Muestra de latencia <span class="badge badge-warning">fallida</span> del 21/02/2021 <span class="badge badge-secondary">Vista</span></a>-->
+<!--<a class="dropdown-item" href="#">Muestra de latencia <span class="badge badge-success">exitosa</span> del 24/02/2021 <span class="badge badge-info">Ver</span></a>-->

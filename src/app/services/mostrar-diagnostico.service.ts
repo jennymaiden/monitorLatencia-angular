@@ -1,9 +1,23 @@
 import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {ResponseDiagnostico} from '../models/responseDiagnostico';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MostrarDiagnosticoService {
+  urlDiagnostico = '/api/monitoreo/diagnostico';
+  // idLatencia = '608f67db6ba6ad34e828a4d8';
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
+  getDiagnosticoById(idLatencia: string): Observable<ResponseDiagnostico>{
+    let parametroLatencia = '';
+    // tslint:disable-next-line:triple-equals
+    if (idLatencia === 'undefined'){
+      parametroLatencia = '/' + idLatencia;
+    }
+    return this.http.get<ResponseDiagnostico>(environment.urlBackend + this.urlDiagnostico + parametroLatencia);
+  }
 }

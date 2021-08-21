@@ -11,83 +11,95 @@
     </div>
     <!--  is-invalid-->
     <div class="card-body">
-      <form>
+      <div class="row">
+      </div>
+      <form [formGroup]="myFormulario"  autocomplete="off" (ngSubmit)="crearMonitoreoProgramado()">
         <div class="mb-3">
-          <label for="url" class="form-label">URL</label>
-          <input type="text" class="form-control " id="url" aria-describedby="URL" required>
-          <div class="invalid-feedback">
-            Por favor ingresar una URL valida
-          </div>
+          <mat-form-field class="form-parametros">
+            <mat-label class="form-label">URL</mat-label>
+            <input class="form-control " matInput  formControlName="url" >
+            <mat-error *ngIf="myFormulario.controls.url.errors?.required && myFormulario.controls.url.touched"
+            class="error">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
         </div>
         <div class="row">
-          <div class="col-6">
-            <label for="numCliente" class="form-label">Número de usuarios</label>
-            <input type="number" class="form-control " id="numCliente" aria-describedby="Número de usuarios">
-            <div class="invalid-feedback">
-              Por favor ingresar un número de usuario
-            </div>
+          <div class="col-4">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label">Número de usuarios</mat-label>
+              <input  matInput type="number" class="form-control "   formControlName="numUsuarios" >
+              <mat-error *ngIf="myFormulario.controls.numUsuarios.errors?.required && myFormulario.controls.numUsuarios.touched" class="error">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
           </div>
-          <div class="col-6">
-            <label for="tamanioPaquete" class="form-label">Tamaño de paquetes</label>
-            <div class="input-group has-validation">
-              <input type="text" class="form-control " id="tamanioPaquete" aria-describedby="inputGroupPrepend0 validaciontamanio" required>
-              <span class="input-group-text" id="tamanioPaquetee">Bytes</span>
-              <div class="invalid-feedback">
-                Por favor ingresar el tamaño de los paquetes
-              </div>
-            </div>
+          <div class="col-4">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label">Tamaño del paquete</mat-label>
+              <input class="form-control " matInput type="number" formControlName="tamanio" required>
+              <span matSuffix class="input-group-text">Bytes</span>
+              <mat-error *ngIf="myFormulario.controls.tamanio.errors?.required && myFormulario.controls.tamanio.touched" class="error">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="tiempoSeg" class="form-label">Tiempo de la muestra</label>
-            <div class="input-group has-validation">
-              <input type="text" class="form-control " id="tiempoSeg" aria-describedby="inputGroupPrepend0 validacionTiempoSeg" required>
-              <span class="input-group-text" >Segundos</span>
-              <div class="invalid-feedback">
-                Por favor ingresar el tiempo de la muestra
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <label for="horaInicio" class="form-label">Hora de inicio</label>
-            <input class="form-control " type="time" value="" id="horaInicio">
-            <div class="invalid-feedback">
-              Por favor ingresar la hora de inicio
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <label for="fechaInicio" class="form-label">Fecha de inicio</label>
-            <input class="form-control " type="date" value="" id="fechaInicio">
-            <div class="invalid-feedback">
-              Por favor ingresar la fecha de inicio
-            </div>
-          </div>
-          <div class="col-6">
-            <label for="fechaFinalizacion" class="form-label">Fecha de finalización</label>
-            <input class="form-control " type="date" value="" id="fechaFinalizacion">
-            <div class="invalid-feedback">
-              Por favor ingresar la fecha de finalización
-            </div>
-          </div>
-        </div>
+          <div class="col-4">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label">Tiempo de la muestra</mat-label>
+              <input class="form-control " matInput type="number"  formControlName="tiempo" required>
+              <span matSuffix class="input-group-text">Segundos</span>
+              <mat-error *ngIf="myFormulario.controls.tiempo.errors?.required && myFormulario.controls.tiempo.touched" class="error">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label">Fecha de inicio</mat-label>
+              <input matInput [matDatepicker]="picker" class="form-control" formControlName="fechaInicio" required>
+              <mat-error *ngIf="myFormulario.controls.fechaInicio.errors?.required && myFormulario.controls.fechaInicio.touched" class="error">{{getErrorMessage()}}</mat-error>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+          <div class="col-6">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label">Hora de inicio</mat-label>
+              <input class="form-control" matInput type="time"  formControlName="horaInicio" required>
+              <mat-error *ngIf="myFormulario.controls.horaInicio.errors?.required && myFormulario.controls.horaInicio.touched" class="error">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-6">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label">Fecha de finalización</mat-label>
+              <input matInput [matDatepicker]="picker1" class="form-control" formControlName="fechaFin" required>
+              <mat-error *ngIf="myFormulario.controls.fechaFin.errors?.required && myFormulario.controls.fechaFin.touched" class="error">{{getErrorMessage()}}</mat-error>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+          <div class="col-6">
+            <mat-form-field class="form-parametros">
+              <mat-label class="form-label" [style]="">Hora de fin</mat-label>
+              <input class="form-control" matInput type="time"   formControlName="horaFin" required>
+              <mat-error *ngIf="myFormulario.controls.horaFin.errors?.required && myFormulario.controls.horaFin.touched" class="error">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example" >
 
         </div>
         <div class="row justify-content-between">
           <div class="col-4">
-            <button type="submit" class="btn btn-warning">Monitoreo Programado</button>
+            <button type="submit" class="btn btn-warning" (click)="crearMonitoreoProgramado()">Monitoreo Programado</button>
           </div>
-          <div class="col-4">
-            <button type="button" class="btn btn-success">Monitoreo Tiempo real</button>
-          </div>
+<!--          <div class="col-4">-->
+<!--            <button type="button" class="btn btn-success">Monitoreo Tiempo real</button>-->
+<!--          </div>-->
         </div>
-
-
-
       </form>
 
     </div>
