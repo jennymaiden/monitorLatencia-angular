@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static(__dirname+'/dist/monitorLatencia'));
 app.get('/',function(req,res){
-    res.sendFile(path.join('/dist/monitorLatencia/index.html'));
+    res.sendFile(path.join(__dirname+'/dist/monitorLatencia/index.html'));
 });
 
 app.listen(process.env.PORT || 8080);
