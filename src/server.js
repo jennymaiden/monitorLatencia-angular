@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-app.use(express.static(__dirname+'/dist/monitorLatencia'));
+app.use(express.static(process.env.HOME+'/dist/monitorLatencia'));
 app.get('/',function(req,res){
     res.sendFile(path.join(process.env.HOME+'/dist/monitorLatencia/index.html'));
 });
