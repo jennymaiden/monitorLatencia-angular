@@ -5,7 +5,7 @@ import { MonitoreoProgramadoService } from '../../services/monitoreo-programado.
 import {Parametro} from '../../models/parametro';
 import {MatDialog, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ModalComponent} from '../../modal/modal.component';
-import {SocketWebService} from '../../services/socket-web.service';
+// import {SocketWebService} from '../../services/socket-web.service';
 
 @Component({
   selector: 'app-parametrizacion',
@@ -18,7 +18,7 @@ export class ParametrizacionComponent implements OnInit {
   // requeridos = new FormControl('', [Validators.required],);
 
   constructor( private router: Router, private monitoreoProgramadoService: MonitoreoProgramadoService,
-               private fb: FormBuilder, public dialog: MatDialog, private socketService: SocketWebService) {
+               private fb: FormBuilder, public dialog: MatDialog) {
     this.myFormulario = this.fb.group({
       url: ['', Validators.required],
       numUsuarios: ['', Validators.required],
