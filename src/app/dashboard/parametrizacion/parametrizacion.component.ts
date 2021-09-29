@@ -5,6 +5,7 @@ import { MonitoreoProgramadoService } from '../../services/monitoreo-programado.
 import {Parametro} from '../../models/parametro';
 import {MatDialog, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ModalComponent} from '../../modal/modal.component';
+import {SocketWebService} from '../../services/socket-web.service';
 
 @Component({
   selector: 'app-parametrizacion',
@@ -17,7 +18,7 @@ export class ParametrizacionComponent implements OnInit {
   // requeridos = new FormControl('', [Validators.required],);
 
   constructor( private router: Router, private monitoreoProgramadoService: MonitoreoProgramadoService,
-               private fb: FormBuilder, public dialog: MatDialog) {
+               private fb: FormBuilder, public dialog: MatDialog, private socketService: SocketWebService) {
     this.myFormulario = this.fb.group({
       url: ['', Validators.required],
       numUsuarios: ['', Validators.required],
@@ -63,6 +64,28 @@ export class ParametrizacionComponent implements OnInit {
           this.openDialog();
         }
       });
+    }
+  }
+
+  crearMonitoreoTiempoReal(): void{
+    console.log('monitoreo tiempo real');
+    const parametros: Parametro = {
+      numClientes: this.myFormulario.get('numUsuarios')?.value,
+      tamanioPaquete: this.myFormulario.get('tamanio')?.value,
+      tiempoSeg: this.myFormulario.get('tiempo')?.value,
+      URL: this.myFormulario.get('url')?.value,
+      fechaInicio: this.myFormulario.get('fechaInicio')?.value,
+      horaInicio: this.myFormulario.get('horaInicio')?.value,
+      fechaFin: this.myFormulario.get('fechaFin')?.value,
+      horaFin: this.myFormulario.get('horaFin')?.value,
+    };
+    console.log('parametros: ' + parametros);
+    const jsonParametros = JSON.stringify(parametros);
+    console.log('parametrosjson : ' + jsonParametros);
+    if (this.myFormulario.valid){
+      // this.socketService.outEven.subscribe(res => {
+      //   this.messages.push(res.msg)
+      // })
     }
   }
   // irMonitoreoTiempoReal(): void {

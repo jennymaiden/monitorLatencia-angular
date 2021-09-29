@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Router} from '@angular/router';
 import {ListarAlertaService} from '../../services/listar-alerta.service';
 import {Alerta} from '../../models/alerta';
@@ -9,14 +9,13 @@ import {Alerta} from '../../models/alerta';
   styleUrls: ['./alerta.component.css']
 })
 export class AlertaComponent implements OnInit {
-  public listAlerta: Alerta[];
+  @Input() listAlerta: Alerta[] | any;
 
   constructor(private router: Router, private alertaService: ListarAlertaService) {
-    this.listAlerta = [];
   }
 
   ngOnInit(): void {
-    this.listarAlertas();
+    // this.listarAlertas();
   }
 
   public mostrarDiagnostico(idLatencia: string, idAlerta: string): void{
