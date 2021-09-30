@@ -14,10 +14,12 @@ export class MostrarDiagnosticoService {
 
   getDiagnosticoById(idLatencia: string): Observable<ResponseDiagnostico>{
     let parametroLatencia = '';
+    console.log('parametro: ' + idLatencia);
     // tslint:disable-next-line:triple-equals
-    if (idLatencia === 'undefined'){
+    if (idLatencia != 'undefined' && idLatencia != null){
       parametroLatencia = '/' + idLatencia;
     }
+    console.log('parametroLatencia: ' + parametroLatencia);
     return this.http.get<ResponseDiagnostico>(environment.urlBackend + this.urlDiagnostico + parametroLatencia);
   }
 }

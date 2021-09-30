@@ -17,6 +17,5 @@ export class ListarAlertaService {
 
   actualizarAlerta(idAlerta: string): Observable<any>{
     return this.http.get<any>(environment.urlBackend + this.urlAlerta + '/' + idAlerta);
-
   }
 }

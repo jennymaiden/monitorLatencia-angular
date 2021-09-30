@@ -15,7 +15,7 @@ export class NavbarComponent  {
 
   readonly PUBLIC_VAPID_KEY = environment.publicKeyWeb;
   public respuesta: any;
-  public listAlerta: Alerta[] | any;
+  public listAlertas: Alerta[] = [];
 
   constructor(private suscripcionWeb: WebPushNotificationsService, private swPush: SwPush, private alertaService: ListarAlertaService) {
     this.swPush.notificationClicks.subscribe((result) => {
@@ -43,10 +43,11 @@ export class NavbarComponent  {
   }
 
   verAlertas(): void{
+    this.listAlertas = [];
     this.alertaService.getAlerta().subscribe(data => {
       if (data.msg === 'OK'){
         data.listAlerta.forEach((objAlerta, index ) => {
-          this.listAlerta.push(objAlerta);
+          this.listAlertas.push(objAlerta);
         });
       }
     });

@@ -137,12 +137,11 @@ export class GraficaComponent implements OnInit{
         let listData: number[]  = [];
         let labelData: string;
         this.listCliente.forEach((valor, index) => {
-
+          listData = [];
           // console.log(`cliente label: Usuario ${currentValue.numCliente}`);
           labelData = `Usuario ${valor.numCliente}`;
           console.log('Usuario : ' + valor.numCliente);
           valor.muestra.forEach((muestraValue: any, index2: number) => {
-            console.log('*** cliente*** ' + muestraValue.numCliente);
             listData.push(muestraValue.tiempoRespuesta);
             // console.log(`tiempo de muesta: data ${muestraValue.tiempoRespuesta}`);
           });

@@ -8,30 +8,18 @@ import {Alerta} from '../../models/alerta';
   templateUrl: './alerta.component.html',
   styleUrls: ['./alerta.component.css']
 })
-export class AlertaComponent implements OnInit {
+export class AlertaComponent  {
   @Input() listAlerta: Alerta[] | any;
 
   constructor(private router: Router, private alertaService: ListarAlertaService) {
   }
 
-  ngOnInit(): void {
-    // this.listarAlertas();
-  }
-
   public mostrarDiagnostico(idLatencia: string, idAlerta: string): void{
-
     // Actualizar alerta a vista
-    this.alertaService.actualizarAlerta(idAlerta);
-    // Ir a diagnostico
-    this.router.navigate(['/diagnostico/' + idLatencia]);
-  }
-  public listarAlertas(): void{
-
-    this.alertaService.getAlerta().subscribe(data => {
+    this.alertaService.actualizarAlerta(idAlerta).subscribe(data => {
       if (data.msg === 'OK'){
-        data.listAlerta.forEach((objAlerta, index ) => {
-          this.listAlerta.push(objAlerta);
-        });
+        // Ir a diagnostico
+        this.router.navigate(['/diagnostico/' + idLatencia]);
       }
     });
   }
