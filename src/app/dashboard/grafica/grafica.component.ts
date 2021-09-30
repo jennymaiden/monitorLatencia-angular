@@ -126,6 +126,7 @@ export class GraficaComponent implements OnInit{
       // console.log(`latencia ${data.latencia[0]._id}`);
       // console.log(`arreglo ${data.arreglo}`);
       if (data.msg === 'OK'){
+        console.log('RESPUESTA:' + data.arreglo);
         data.arreglo.forEach((currentValue, index) => {
           // @ts-ignore
           this.listCliente.push(currentValue);
