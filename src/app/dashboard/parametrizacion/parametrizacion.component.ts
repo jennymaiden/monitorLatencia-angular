@@ -12,7 +12,7 @@ import {ModalComponent} from '../../modal/modal.component';
   templateUrl: './parametrizacion.component.html',
   styleUrls: ['./parametrizacion.component.css']
 })
-export class ParametrizacionComponent implements OnInit {
+export class ParametrizacionComponent {
 
   myFormulario: FormGroup;
   // requeridos = new FormControl('', [Validators.required],);
@@ -30,9 +30,6 @@ export class ParametrizacionComponent implements OnInit {
       horaFin: ['', Validators.required]
     });
   }
-  ngOnInit(): void {
-  }
-
   // tslint:disable-next-line:typedef
   getErrorMessage() {
     if (this.myFormulario.valid) {
@@ -43,6 +40,7 @@ export class ParametrizacionComponent implements OnInit {
   }
 
   crearMonitoreoProgramado(): void {
+    console.log('click aoki');
     const parametros: Parametro = {
       numClientes: this.myFormulario.get('numUsuarios')?.value,
       tamanioPaquete: this.myFormulario.get('tamanio')?.value,
@@ -104,11 +102,8 @@ export class ParametrizacionComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-
-    dialogConfig.data = 'Se ha programado la toma de muestras para el dia ' + new Date (this.myFormulario.get('fechaInicio')?.value) + 'a las ' + this.myFormulario.get('horaInicio')?.value;
-
+    dialogConfig.data = 'Se ha programado la toma de muestras para el dia ' + this.myFormulario.get('fechaInicio')?.value + 'a las ' + this.myFormulario.get('horaInicio')?.value;
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
