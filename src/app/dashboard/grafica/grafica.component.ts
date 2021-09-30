@@ -136,12 +136,12 @@ export class GraficaComponent implements OnInit{
         // tslint:disable-next-line:prefer-const
         let listData: number[]  = [];
         let labelData: string;
-        this.listCliente.forEach((currentValue, index) => {
+        this.listCliente.forEach((valor, index) => {
 
           // console.log(`cliente label: Usuario ${currentValue.numCliente}`);
-          labelData = `Usuario ${currentValue.numCliente}`;
-          console.log('Usuario : ' + currentValue.numCliente);
-          currentValue.muestra.forEach((muestraValue: any, index2: number) => {
+          labelData = `Usuario ${valor.numCliente}`;
+          console.log('Usuario : ' + valor.numCliente);
+          valor.muestra.forEach((muestraValue: any, index2: number) => {
             console.log('*** cliente*** ' + muestraValue.numCliente);
             listData.push(muestraValue.tiempoRespuesta);
             // console.log(`tiempo de muesta: data ${muestraValue.tiempoRespuesta}`);
