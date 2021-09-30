@@ -129,6 +129,7 @@ export class GraficaComponent implements OnInit{
         console.log('RESPUESTA:' + data.arreglo);
         data.arreglo.forEach((currentValue, index) => {
           // @ts-ignore
+          console.log('****RESPUESTA***:' + currentValue);
           this.listCliente.push(currentValue);
         });
 
@@ -141,16 +142,14 @@ export class GraficaComponent implements OnInit{
           labelData = `Usuario ${currentValue.numCliente}`;
           console.log('Usuario : ' + currentValue.numCliente);
           currentValue.muestra.forEach((muestraValue: any, index2: number) => {
-
+            console.log('*** cliente*** ' + muestraValue.numCliente);
             listData.push(muestraValue.tiempoRespuesta);
             // console.log(`tiempo de muesta: data ${muestraValue.tiempoRespuesta}`);
           });
           console.log('Tiempos : ' + listData);
-          // tslint:disable-next-line:prefer-const
           let chartData: ChartDataSets;
           chartData = {data: listData, label: labelData, borderColor: '#' + Math.floor(Math.random() * 16777215).toString(16)};
           // console.log(`tamanio de muestra ${listData}`);
-          // @ts-ignore
           this.lineChartData.push(chartData );
         });
         // console.log(`tamanio de listCliente ${this.listCliente[0].muestra.length}`);
