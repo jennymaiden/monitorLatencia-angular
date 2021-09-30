@@ -102,7 +102,8 @@ export class ParametrizacionComponent {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = 'Se ha programado la toma de muestras para el dia ' + this.myFormulario.get('fechaInicio')?.value + 'a las ' + this.myFormulario.get('horaInicio')?.value;
+
+    dialogConfig.data = 'Se ha programado la toma de muestras para el dia ' +  new Date (this.myFormulario.get('fechaInicio')?.value) + 'a las ' + this.myFormulario.get('horaInicio')?.value;
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
