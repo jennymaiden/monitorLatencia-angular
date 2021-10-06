@@ -25,6 +25,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import {MatDialogModule} from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
+
+import { SocketWebService } from './services/socket-web.service';
 
 @NgModule({
   declarations: [
@@ -56,9 +60,11 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatDatepickerModule,
         MatNativeDateModule,
         MatMomentDateModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTooltipModule,
+        MatCardModule
     ],
-  providers: [],
+  providers: [SocketWebService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

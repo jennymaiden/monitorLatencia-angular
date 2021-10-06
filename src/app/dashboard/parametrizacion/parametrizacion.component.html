@@ -13,7 +13,7 @@
     <div class="card-body">
       <div class="row">
       </div>
-      <form [formGroup]="myFormulario"  autocomplete="off" (ngSubmit)="crearMonitoreoProgramado()">
+      <form [formGroup]="myFormulario"  autocomplete="off" >
         <div class="mb-3">
           <mat-form-field class="form-parametros">
             <mat-label class="form-label">URL</mat-label>
@@ -34,15 +34,16 @@
             <mat-form-field class="form-parametros">
               <mat-label class="form-label">Tamaño del paquete</mat-label>
               <input class="form-control " matInput type="number" formControlName="tamanio" required>
-              <span matSuffix class="input-group-text">Bytes</span>
+              <span matSuffix class="input-group-text"  matTooltip="Unidad de información base. Sugerencia rango de 56 a 996 bytes" matTooltipPosition="above">Bytes</span>
               <mat-error *ngIf="myFormulario.controls.tamanio.errors?.required && myFormulario.controls.tamanio.touched" class="error">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
+
           </div>
           <div class="col-4">
             <mat-form-field class="form-parametros">
               <mat-label class="form-label">Tiempo de la muestra</mat-label>
               <input class="form-control " matInput type="number"  formControlName="tiempo" required>
-              <span matSuffix class="input-group-text">Segundos</span>
+              <span matSuffix class="input-group-text" matTooltip="Unidad de medida de duración de la muestra" matTooltipPosition="above">Segundos</span>
               <mat-error *ngIf="myFormulario.controls.tiempo.errors?.required && myFormulario.controls.tiempo.touched" class="error">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
 
@@ -94,7 +95,7 @@
         </div>
         <div class="row justify-content-between">
           <div class="col-4">
-            <button type="submit" class="btn btn-warning">Monitoreo Programado</button>
+            <button type="submit" class="btn btn-warning" (click)="crearMonitoreoProgramado()" >Monitoreo Programado</button>
           </div>
           <div class="col-4">
 <!--            <button type="button" class="btn btn-success" (click)="crearMonitoreoTiempoReal()">Monitoreo Tiempo real</button>-->
@@ -104,5 +105,6 @@
 
     </div>
   </div>
+  <div class="row music-box"></div>
 </div>
 <app-footer></app-footer>

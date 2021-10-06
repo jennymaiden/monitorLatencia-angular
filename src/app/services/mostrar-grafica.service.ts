@@ -13,12 +13,14 @@ export class MostrarGraficaService {
 
   constructor(private http: HttpClient) { }
 
-  getGrafica(idLatrencia: string): Observable<Grafica>{
+  getGrafica(idLatencia: string): Observable<Grafica>{
       let parametroLatencia = '';
+      console.log(`la latencia es : ${idLatencia}`);
       // tslint:disable-next-line:triple-equals
-      if (idLatrencia === 'undefined'){
-          parametroLatencia = '/' + idLatrencia;
+      if (idLatencia != 'undefined' && idLatencia != null){
+          parametroLatencia = '/' + idLatencia;
       }
+      console.log(`lOA PARAMETROS SON : ${parametroLatencia}`);
       return this.http.get<Grafica>(environment.urlBackend + this.urlGrafica + parametroLatencia);
   }
 

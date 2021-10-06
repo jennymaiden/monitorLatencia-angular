@@ -23,22 +23,26 @@
                     [datasets]="lineChartData"
                     [labels]="lineChartLabels"
                     [options]="lineChartOptions"
-                    [colors]="lineChartColors"
                     [legend]="lineChartLegend"
                     [chartType]="lineChartType"></canvas>
           </div>
         </div>
       </div>
       <hr>
+      <mat-card class="bg-warning">
+        <div class="clearfix">
+          <h3 class="float-left">Mostrar diagnostico</h3>
+          <button class="btn btn-info float-right" type="button" (click)="irDiagnostico()">Ver</button>
+        </div>
+      </mat-card>
     </div>
-    <div class="card-header bg-warning font-weight-bold" style="margin-bottom: 120px">
-      <div class="clearfix">
-        <h3 class="float-left">Mostrar diagnostico</h3>
-        <button class="btn btn-info float-right" type="button" (click)="irDiagnostico()">Ver</button>
-      </div>
-
-    </div>
-
+<!--    <div class="card-header bg-warning font-weight-bold" style="margin-bottom: 120px">-->
+<!--      <div class="clearfix">-->
+<!--        <h3 class="float-left">Mostrar diagnostico</h3>-->
+<!--        <button class="btn btn-info float-right" type="button" (click)="irDiagnostico()">Ver</button>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
+  <div class="row music-box"></div>
 </div>
 <app-footer></app-footer>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MostrarDiagnosticoService} from '../../services/mostrar-diagnostico.service';
 import {Parametro} from '../../models/parametro';
-import { ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Diagnostico} from '../../models/diagnostico';
 import {ResponseDiagnostico} from '../../models/responseDiagnostico';
 
@@ -16,13 +16,21 @@ export class DiagnosticoComponent implements OnInit {
   response: ResponseDiagnostico | undefined;
   jsonQoE: any;
 
-  constructor(private diagnosticoServer: MostrarDiagnosticoService, private rutaActiva: ActivatedRoute) {
+  constructor(private diagnosticoServer: MostrarDiagnosticoService, private rutaActiva: ActivatedRoute, private router2: Router) {
 
   }
 
   ngOnInit(): void {
     this.idLatencia = this.rutaActiva.snapshot.paramMap.get('idLatencia');
     this.getDiagnosticoById(this.idLatencia);
+  }
+
+  public irGrafica(): void {
+    if (this.idLatencia !== void 0 && this.idLatencia !== null){
+      this.router2.navigate(['/grafica/' + this.idLatencia]);
+    }else{
+      this.router2.navigate(['/grafica']);
+    }
   }
 
   public getDiagnosticoById(latencia: string): void {

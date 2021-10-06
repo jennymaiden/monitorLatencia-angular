@@ -3,10 +3,8 @@ import {ChartDataSets, ChartOptions, ChartType, NestedTickOptions} from 'chart.j
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { MostrarGraficaService } from '../../services/mostrar-grafica.service';
 import {Muestra} from '../../models/muestra';
-import {Grafica} from '../../models/grafica';
-import {Arreglo} from '../../models/arreglo';
 import {ActivatedRoute, Router} from '@angular/router';
-// import * as ChartAnnotation from "chartjs-plugin-annotation";
+
 // TODO Pagina de charts https://valor-software.com/ng2-charts/#/GeneralInfo
 @Component({
   selector: 'app-grafica',
@@ -65,33 +63,6 @@ export class GraficaComponent implements OnInit{
     },
   };
 
-  public lineChartColors: Color[] = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-
   public lineChartLegend = true;
   public lineChartType: ChartType = 'line';
 
@@ -105,16 +76,10 @@ export class GraficaComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getMostrarGrafica();
     this.idLatencia = this.router.snapshot.paramMap.get('idLatencia');
+    this.getMostrarGrafica();
+    this.listCliente = [];
   }
-
-  // public generateRandomColor(): string
-  // {
-  //   // tslint:disable-next-line:prefer-const
-  //   let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-  //   return randomColor;
-  // }
 
   // Servicio para traer la informacion de la grafica
   public getMostrarGrafica(): void {
@@ -126,26 +91,27 @@ export class GraficaComponent implements OnInit{
       // console.log(`latencia ${data.latencia[0]._id}`);
       // console.log(`arreglo ${data.arreglo}`);
       if (data.msg === 'OK'){
-        console.log('RESPUESTA:' + data.arreglo);
+        // console.log('RESPUESTA:' + data.arreglo);
         data.arreglo.forEach((currentValue, index) => {
           // @ts-ignore
-          console.log('****RESPUESTA***:' + currentValue);
+          // console.log('****RESPUESTA***:' + currentValue);
           this.listCliente.push(currentValue);
         });
 
         // tslint:disable-next-line:prefer-const
         let listData: number[]  = [];
         let labelData: string;
+        console.log(`Numero de clientes ${this.listCliente.length}`);
         this.listCliente.forEach((valor, index) => {
           listData = [];
           // console.log(`cliente label: Usuario ${currentValue.numCliente}`);
           labelData = `Usuario ${valor.numCliente}`;
-          console.log('Usuario : ' + valor.numCliente);
+          // console.log('Usuario : ' + valor.numCliente);
           valor.muestra.forEach((muestraValue: any, index2: number) => {
             listData.push(muestraValue.tiempoRespuesta);
             // console.log(`tiempo de muesta: data ${muestraValue.tiempoRespuesta}`);
           });
-          console.log('Tiempos : ' + listData);
+          // console.log('Tiempos : ' + listData);
           let chartData: ChartDataSets;
           chartData = {data: listData, label: labelData, borderColor: '#' + Math.floor(Math.random() * 16777215).toString(16)};
           // console.log(`tamanio de muestra ${listData}`);
