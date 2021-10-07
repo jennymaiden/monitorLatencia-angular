@@ -6,8 +6,6 @@ import {Parametro} from '../../models/parametro';
 import {MatDialog, MatDialogConfig, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ModalComponent} from '../../modal/modal.component';
 import {ParametroTiempoReal} from '../../models/parametroTiempoReal';
-import {SocketWebService} from '../../services/socket-web.service';
-// import {SocketWebService} from '../../services/socket-web.service';
 
 @Component({
   selector: 'app-parametrizacion',
