@@ -28,8 +28,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 
-import { SocketWebService } from './services/socket-web.service';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +62,7 @@ import { SocketWebService } from './services/socket-web.service';
         MatTooltipModule,
         MatCardModule
     ],
-  providers: [SocketWebService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
